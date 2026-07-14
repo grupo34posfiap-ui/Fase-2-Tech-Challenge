@@ -1,95 +1,106 @@
-WINE QUALITY CLASSIFICATION
-Tech Challenge - Fase 2 | POSTECH Data Analytics
+# Wine Quality Classification 
+
+**Tech Challenge — Fase 2 | POSTECH Data Analytics**
 
 Pipeline completa de Machine Learning para classificar a qualidade de vinhos a
-partir de suas caracteristicas fisico-quimicas, transformando o problema em uma
-classificacao binaria:
+partir de suas características físico-químicas, transformando o problema em uma
+**classificação binária**:
 
-Alta Qualidade    - nota maior ou igual a 7
-Baixa/Media Qualidade - nota menor que 7
+- 🔴 **Alta Qualidade** — nota ≥ 7
+- ⚪ **Baixa/Média Qualidade** — nota < 7
 
+---
 
-RESULTADO PRINCIPAL
+## Resultado principal
 
-Modelo                 ROC-AUC   Acuracia   Precisao   Recall   F1
-Random Forest (melhor)  0,916     0,90       0,71       0,44     0,55
-Gradient Boosting       0,886     0,88       0,57       0,44     0,50
-Regressao Logistica     0,884     0,79       0,36       0,74     0,48
+| Modelo | ROC-AUC | Acurácia | Precisão | Recall | F1 |
+|---|---|---|---|---|---|
+| **Random Forest** ⭐ | **0,916** | 0,90 | 0,71 | 0,44 | 0,55 |
+| Gradient Boosting | 0,886 | 0,88 | 0,57 | 0,44 | 0,50 |
+| Regressão Logística | 0,884 | 0,79 | 0,36 | 0,74 | 0,48 |
 
-O Random Forest foi o melhor modelo geral, com maior ROC-AUC e precisao. A
-Regressao Logistica se destaca no recall, o que e util quando o objetivo e nao
-deixar passar nenhum vinho premium.
+> O **Random Forest** foi o melhor modelo geral (maior ROC-AUC e precisão). A
+> **Regressão Logística** se destaca no recall — útil quando o objetivo é não
+> deixar passar nenhum vinho premium.
 
-Variaveis mais influentes na qualidade:
-1. Sulfatos (conservacao/antioxidacao)
-2. Acidez volatil (quanto menor, melhor - evita o defeito "avinagrado")
-3. Alcool (maior teor tende a melhor avaliacao)
+### Variáveis mais influentes na qualidade
+1. **Sulfatos** (conservação/antioxidação)
+2. **Acidez volátil** (quanto menor, melhor — evita o defeito "avinagrado")
+3. **Álcool** (maior teor → melhor avaliação)
 
+---
 
-ESTRUTURA DO REPOSITORIO
+## Estrutura do repositório
 
+```
 wine-quality-classification/
-  data/
-    WineQT.csv                    - base de dados (Wine Quality Dataset)
-  notebooks/
-    wine_quality_analysis.ipynb   - notebook completo (EDA + modelagem)
-  src/
-    preprocessing.py              - carga, binarizacao, dedup, feature engineering
-    eda.py                        - analise exploratoria (gera os graficos)
-    train.py                      - treino, avaliacao e comparacao dos modelos
-  results/
-    *.png                         - graficos da EDA e da modelagem
-    model_comparison.csv          - tabela comparativa de metricas
-    feature_importance.csv        - importancia das variaveis
-    classification_report.txt     - relatorio do melhor modelo
-    metrics_summary.json          - resumo consolidado em JSON
-  apresentacao_executiva.pdf      - storytelling executivo da analise
-  requirements.txt
-  README.txt
+├── data/
+│   └── WineQT.csv                      # Base de dados (Wine Quality Dataset)
+├── notebooks/
+│   └── wine_quality_analysis.ipynb     # Notebook completo (EDA + modelagem)
+├── src/
+│   ├── preprocessing.py                # Carga, binarização, dedup, feature engineering
+│   ├── eda.py                          # Análise exploratória (gera os gráficos)
+│   └── train.py                        # Treino, avaliação e comparação dos modelos
+├── results/
+│   ├── *.png                           # Gráficos da EDA e da modelagem
+│   ├── model_comparison.csv            # Tabela comparativa de métricas
+│   ├── feature_importance.csv          # Importância das variáveis
+│   ├── classification_report.txt       # Relatório do melhor modelo
+│   └── metrics_summary.json            # Resumo consolidado em JSON
+├── apresentacao_executiva.pdf          # Storytelling executivo da análise
+├── requirements.txt
+└── README.md
+```
 
+---
 
-COMO EXECUTAR
+## Como executar
 
-1. Criar ambiente e instalar dependencias
-   pip install -r requirements.txt
+```bash
+# 1. Criar ambiente e instalar dependências
+pip install -r requirements.txt
 
-2. Rodar a EDA (gera os graficos em results/)
-   cd src
-   python eda.py
+# 2. Rodar a EDA (gera os gráficos em results/)
+cd src
+python eda.py
 
-3. Treinar e avaliar os modelos
-   python train.py
+# 3. Treinar e avaliar os modelos
+python train.py
 
-Ou abrir o notebook completo:
-   jupyter notebook notebooks/wine_quality_analysis.ipynb
+# Ou abrir o notebook completo:
+jupyter notebook notebooks/wine_quality_analysis.ipynb
+```
 
+---
 
-METODOLOGIA
+## Metodologia
 
-1. Compreensao do problema - binarizacao da nota de qualidade.
-2. EDA - distribuicoes, correlacoes justificadas, deteccao de outliers (IQR),
-   analise de balanceamento (~14% de positivos, classe desbalanceada).
-3. Pre-processamento - sem nulos; remocao de 125 duplicatas (evita leakage);
-   padronizacao via StandardScaler dentro do pipeline; 4 novas features com
-   justificativa enologica.
-4. Modelagem - 3 algoritmos com split estratificado e class_weight='balanced'.
-5. Avaliacao - ROC-AUC, F1, precisao, recall, matriz de confusao e validacao
+1. **Compreensão do problema** — binarização da nota de qualidade.
+2. **EDA** — distribuições, correlações justificadas, detecção de outliers (IQR),
+   análise de balanceamento (~14% de positivos → classe desbalanceada).
+3. **Pré-processamento** — sem nulos; remoção de 125 duplicatas (evita *leakage*);
+   padronização via `StandardScaler` dentro do pipeline; 4 novas features com
+   justificativa enológica.
+4. **Modelagem** — 3 algoritmos com split estratificado e `class_weight='balanced'`.
+5. **Avaliação** — ROC-AUC, F1, precisão, recall, matriz de confusão e validação
    cruzada estratificada (5 folds).
-6. Interpretacao - permutation importance e recomendacoes para producao.
+6. **Interpretação** — *permutation importance* + recomendações para a produção.
 
+---
 
-DECISOES TECNICAS RELEVANTES
+## Decisões técnicas relevantes
 
-- Duplicatas removidas considerando apenas as features (nao o Id), para evitar
-  que a mesma amostra apareca em treino e teste (vazamento de dados).
-- Outliers mantidos, pois representam variacao fisica real; modelos de arvore
-  sao robustos a eles.
-- Metricas alem da acuracia: com classes desbalanceadas, acuracia e enganosa;
-  o foco e ROC-AUC e F1.
-- Scaler dentro do pipeline: a padronizacao e ajustada apenas no treino.
+- **Duplicatas removidas** considerando apenas as features (não o `Id`), para evitar
+  que a mesma amostra apareça em treino e teste (vazamento de dados).
+- **Outliers mantidos** — representam variação física real; modelos de árvore são robustos.
+- **Métricas além da acurácia** — com classes desbalanceadas, acurácia é enganosa;
+  o foco é ROC-AUC e F1.
+- **Scaler dentro do pipeline** — a padronização é ajustada apenas no treino.
 
+---
 
-DATASET
+## Dataset
 
-Wine Quality Dataset (Kaggle) - 1.143 amostras, 11 variaveis fisico-quimicas e
-nota de qualidade. Apos limpeza: 1.018 amostras unicas.
+Wine Quality Dataset (Kaggle) — 1.143 amostras, 11 variáveis físico-químicas +
+nota de qualidade. Após limpeza: 1.018 amostras únicas.
